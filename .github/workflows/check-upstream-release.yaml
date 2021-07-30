@@ -25,12 +25,12 @@ jobs:
         echo ::set-output name=existing_count::$( \
           curl https://api.github.com/search/issues?q=${{steps.get_upstream_version.output.version}}+is:issue+repo:opsani/kubernetes_asyncio \
           | jq '.total_count')
-    - name: Create Issue for New Upstream Version
-      if: |
-          ${{ steps.get_upstream_version.output.version != env.FORK_VERSION
-          && steps.get_existing_rebase_issue.output.existing_count == 0 }}
-      uses: imjohnbo/issue-bot@v3
-      with:
-        assignees: "linkous8" # Uncomment when done testing , rstarmer, pnickolov, blakewatters, mjdeclerck"
-        title: Update fork to ${{ steps.get_upstream_version.output.version }}
-        body: "This fork is now out of date. Rebase on to the ${{ steps.get_upstream_version.output.version }} release"
+    # - name: Create Issue for New Upstream Version
+    #   if: |
+    #       ${{ steps.get_upstream_version.output.version != env.FORK_VERSION
+    #       && steps.get_existing_rebase_issue.output.existing_count == 0 }}
+    #   uses: imjohnbo/issue-bot@v3
+    #   with:
+    #     assignees: "linkous8" # Uncomment when done testing , rstarmer, pnickolov, blakewatters, mjdeclerck"
+    #     title: Update fork to ${{ steps.get_upstream_version.output.version }}
+    #     body: "This fork is now out of date. Rebase on to the ${{ steps.get_upstream_version.output.version }} release"
