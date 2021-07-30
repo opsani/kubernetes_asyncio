@@ -7,7 +7,7 @@ on:
       - master
 env:
   # When updating the fork this will need to be updated as well
-  FORK_VERSION: '12.1.1'
+  FORK_VERSION: "12.1.1"
 jobs:
   check_upstream_create_issue:
     runs-on: ubuntu-latest
@@ -15,24 +15,24 @@ jobs:
     - id: get_upstream_version
     # No published version in github, get from pypi instead
       run: |
-          UPSTREAM_VERSION=$(curl https://pypi.org/pypi/kubernetes_asyncio/json | jq '.info.version')
+          UPSTREAM_VERSION=$(curl https://pypi.org/pypi/kubernetes_asyncio/json | jq '.info.version' -r)
           echo Upstream is $UPSTREAM_VERSION
           echo "::set-output name=version::$UPSTREAM_VERSION"
     - name: Check for existing issue
-      if: steps.get_upstream_version.output.version != env.FORK_VERSION
+      if: steps.get_upstream_version.outputs.version != env.FORK_VERSION
       id: get_existing_rebase_issue
       run: |
         echo Last step output ${{ steps.get_upstream_version.outputs.version }}
-        ISSUE_COUNT=$( curl https://api.github.com/search/issues?q=${{steps.get_upstream_version.output.version}}+is:issue+repo:opsani/kubernetes_asyncio \
+        ISSUE_COUNT=$( curl https://api.github.com/search/issues?q=${{steps.get_upstream_version.outputs.version}}+is:issue+repo:opsani/kubernetes_asyncio \
           | jq '.total_count')
         echo Issue count is $ISSUE_COUNT
         echo ::set-output name=existing_count::$ISSUE_COUNT
-    # - name: Create Issue for New Upstream Version
-    #   if: |
-    #       ${{ steps.get_upstream_version.output.version != env.FORK_VERSION
-    #       && steps.get_existing_rebase_issue.output.existing_count == 0 }}
-    #   uses: imjohnbo/issue-bot@v3
-    #   with:
-    #     assignees: "linkous8" # Uncomment when done testing , rstarmer, pnickolov, blakewatters, mjdeclerck"
-    #     title: Update fork to ${{ steps.get_upstream_version.output.version }}
-    #     body: "This fork is now out of date. Rebase on to the ${{ steps.get_upstream_version.output.version }} release"
+    - name: Create Issue for New Upstream Version
+      if: |
+          ${{ steps.get_upstream_version.outputs.version != env.FORK_VERSION
+          && steps.get_existing_rebase_issue.outputs.existing_count == 0 }}
+      uses: imjohnbo/issue-bot@v3
+      with:
+        assignees: "linkous8" # Uncomment when done testing , rstarmer, pnickolov, blakewatters, mjdeclerck"
+        title: Update fork to ${{ steps.get_upstream_version.outputs.version }}
+        body: "This fork is now out of date. Rebase on to the ${{ steps.get_upstream_version.outputs.version }} release"
