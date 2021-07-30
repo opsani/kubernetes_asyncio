@@ -2,6 +2,9 @@ name: Check Upstream for New Release
 on:
   schedule:
     - cron: '0 14 * * *'
+  push:
+    branches:
+      - master
 env:
   # When updating the fork this will need to be updated as well
   FORK_VERSION: '12.1.1'
