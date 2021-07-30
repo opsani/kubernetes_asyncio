@@ -14,7 +14,10 @@ jobs:
     steps:
     - id: get_upstream_version
     # No published version in github, get from pypi instead
-      run: echo ::set-output name=version::$(curl https://pypi.org/pypi/kubernetes_asyncio/json | jq '.info.version')
+      run: |
+          UPSTREAM_VERSION=$(curl https://pypi.org/pypi/kubernetes_asyncio/json | jq '.info.version')
+          echo Upstream is $UPSTREAM_VERSION
+          echo ::set-output name=version::$UPSTREAM_VERSION
     - name: Check for existing issue
       if: steps.get_upstream_version.output.version != env.FORK_VERSION
       id: get_existing_rebase_issue
