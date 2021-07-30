@@ -28,9 +28,7 @@ jobs:
         echo Issue count is $ISSUE_COUNT
         echo ::set-output name=existing_count::$ISSUE_COUNT
     - name: Create Issue for New Upstream Version
-      if: |
-          ${{ steps.get_upstream_version.outputs.version != env.FORK_VERSION
-          && steps.get_existing_rebase_issue.outputs.existing_count == 0 }}
+      if: steps.get_upstream_version.outputs.version != env.FORK_VERSION && steps.get_existing_rebase_issue.outputs.existing_count == 0
       uses: imjohnbo/issue-bot@v3
       with:
         assignees: "linkous8" # Uncomment when done testing , rstarmer, pnickolov, blakewatters, mjdeclerck"
