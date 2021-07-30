@@ -31,6 +31,6 @@ jobs:
       if: steps.get_upstream_version.outputs.version != env.FORK_VERSION && steps.get_existing_rebase_issue.outputs.existing_count == 0
       uses: imjohnbo/issue-bot@v3
       with:
-        assignees: "linkous8" # Uncomment when done testing , rstarmer, pnickolov, blakewatters, mjdeclerck"
+        assignees: "linkous8, rstarmer, pnickolov, blakewatters, mjdeclerck"
         title: Update fork to ${{ steps.get_upstream_version.outputs.version }}
         body: "This fork is now out of date. Rebase on to the ${{ steps.get_upstream_version.outputs.version }} release"
