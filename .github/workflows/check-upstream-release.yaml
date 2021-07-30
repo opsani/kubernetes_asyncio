@@ -7,7 +7,7 @@ on:
       - master
 env:
   # When updating the fork this will need to be updated as well
-  FORK_VERSION: "12.1.1"
+  FORK_VERSION: "12.1.2"
 jobs:
   check_upstream_create_issue:
     runs-on: ubuntu-latest
