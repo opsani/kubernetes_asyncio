@@ -17,7 +17,7 @@ from setuptools import setup
 # Do not edit these constants. They will be updated automatically
 # by scripts/update-client.sh.
 CLIENT_VERSION = "12.1.2"
-PACKAGE_NAME = "kubernetes_asyncio"
+PACKAGE_NAME = "kubernetes_asyncio_cr_patch"
 DEVELOPMENT_STATUS = "5 - Production/Stable"
 
 # To install the library, run the following
@@ -36,11 +36,11 @@ with open('test-requirements.txt') as f:
 setup(
     name=PACKAGE_NAME,
     version=CLIENT_VERSION,
-    description="Kubernetes asynchronous python client",
+    description="Kubernetes asynchronous python client with patched custom resource API client",
     author_email="",
     author="Kubernetes",
     license="Apache License Version 2.0",
-    url="https://github.com/tomplus/kubernetes_asyncio",
+    url="https://github.com/opsani/kubernetes_asyncio",
     keywords=[
         "Swagger",
         "OpenAPI",
@@ -58,7 +58,11 @@ setup(
         'kubernetes_asyncio.utils'],
     include_package_data=True,
     long_description="""\
-    Python client for kubernetes http://kubernetes.io/
+    NOTE: this is a repackaged version of the kubernetes_asyncio library with
+    modified generated code that changes the content type used by the custom
+    resource API for patch operations. It is recommended that you use the
+    upstream library as this package is meant to be a temporary workaround
+    https://pypi.org/project/kubernetes_asyncio/
     """,
     classifiers=[
         "Development Status :: %s" %
